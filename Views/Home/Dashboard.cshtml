@@ -1,0 +1,63 @@
+@model DashboardView
+<nav class="navbar navbar-expand-md navbar-light bg-light nav-color">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img class="logo" src="~/images/logo.png" alt="light bulb"></a>
+        <h1 class="display-4">Great Ideas!</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/destroy">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+<h1 class="display-4">Hi @ViewBag.UserName!</h1>
+    <form action="/Idea/Create" method="Post">
+        <div class="form-group">
+            <span asp-validation-for="Idea.Content" class="text-danger"></span>
+            <input type="hidden" asp-for="Idea.UserId" value="@ViewBag.UserId">
+            <textarea asp-for="Idea.Content" class="form-control" rows="3" placeholder="Share your ideas here!"></textarea>
+            <button class="btn btn-primary mt-3">Add Idea!</button>
+        </div>
+    </form>
+    <div class="overflow-auto main-box">
+    @{
+        foreach(var idea in Model.AllIdeas)
+        {
+            if(idea.Creator.UserId == ViewBag.UserId)
+            {
+                <div class="border border-secondary rounded mt-3 p-2 card shadow-lg">
+                <p><a href="/Users/@idea.Creator.UserId">@idea.Creator.Alias</a> says:</p>
+                <p class="ml-3">@idea.Content</p>
+                <form action="like/create" method="post">
+                    <input type="hidden" asp-for="Like.UserId" value="@ViewBag.UserId">
+                    <input type="hidden" asp-for="Like.IdeaId" value="@idea.IdeaId">
+                <p class="d-inline"><a href="idea/destroy/@idea.IdeaId"  class="d-inline btn btn-danger mr-3 shadow-sm">Delete</a><button type="submit" class="btn btn-success shadow-sm">Like</button>  <a href="/Idea/@idea.IdeaId">@idea.Likes.Count people</a> like this.</p>
+                </form>
+                </div>
+            }
+            else
+            {
+                <div class="border border-secondary rounded mt-3 p-2 card shadow-lg">
+                <p><a href="/Users/@idea.Creator.UserId">@idea.Creator.Alias</a> says:</p>
+                <p class="ml-3">@idea.Content</p>
+                <form action="like/create" method="post">
+                    <input type="hidden" asp-for="Like.UserId" value="@ViewBag.UserId">
+                    <input type="hidden" asp-for="Like.IdeaId" value="@idea.IdeaId">
+                <p class="d-inline"><button type="submit" class="btn btn-success shadow-sm">Like</button>  <a href="/Idea/@idea.IdeaId">@idea.Likes.Count people</a> like this.</p>
+                </form>
+                </div> 
+            }
+        }
+    }
+    </div>
+</div>

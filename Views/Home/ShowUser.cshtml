@@ -1,0 +1,33 @@
+@model User
+<nav class="navbar navbar-expand-md navbar-light bg-light nav-color">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img class="logo" src="~/images/logo.png" alt="light bulb"></a>
+        <h1 class="display-4">Great Ideas!</h1>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/dashboard">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/destroy">Log Out</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<nav></nav>
+<div class="background text-white p-4">
+    <h3 class="display-4">User Information</h3>
+    <ul class="list-unstyled ml-5 mt-5">
+        <li><span class="font-weight-bold">Name: </span>@Model.Name</li>
+        <li><span class="font-weight-bold">Alias: </span>@Model.Alias</li>
+        <li><span class="font-weight-bold">Email: </span>@Model.Email</li>
+        <li><span class="font-weight-bold">Total Number of Posts: </span>@Model.AllIdeas.Count</li>
+        <li><span class="font-weight-bold">Total Number of Likes: </span>@Model.IdeasLiked.Count</li>
+    </ul>
+</div>
